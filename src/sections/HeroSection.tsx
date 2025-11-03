@@ -207,7 +207,7 @@ const HeroSection = () => {
               </span>
             </button>
             <button 
-              onClick={() => window.open('https://github.com/meituan-longcat/LongCat-Video/blob/main/longcatvideo_tech_report.pdf', '_blank')}
+              onClick={() => window.open('https://arxiv.org/abs/2510.22200', '_blank')}
               style={{
               background: 'linear-gradient(135deg, #FF006E 0%, #FF7A00 100%)',
               color: 'white',
