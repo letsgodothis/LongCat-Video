@@ -39,7 +39,12 @@ def generate(args):
     num_gpus = torch.cuda.device_count()
     local_rank = rank % num_gpus
     torch.cuda.set_device(local_rank)
-    dist.init_process_group(backend="nccl", timeout=datetime.timedelta(seconds=3600*24))
+    # choose backend: prefer NCCL on supported Linux CUDA setups, otherwise fall back to Gloo (Windows or NCCL-unavailable)
+    if torch.cuda.is_available() and dist.is_nccl_available():
+        backend = "nccl"
+    else:
+        backend = "gloo"
+    dist.init_process_group(backend=backend, timeout=datetime.timedelta(seconds=3600*24))
     global_rank    = dist.get_rank()
     num_processes  = dist.get_world_size()
 
